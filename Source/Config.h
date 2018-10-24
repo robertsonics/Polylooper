@@ -16,5 +16,6 @@
 #define MY_BUTTON_COLOUR    Colours::royalblue
 #define MY_TEXT_COLOUR      Colours::whitesmoke
 #define MY_KNOB_COLOUR      Colours::springgreen
+#define MY_ALARM_COLOUR     Colour(0xffb45ba0)
 
 #endif  // CONFIG_H_INCLUDED

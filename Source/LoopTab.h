@@ -41,8 +41,8 @@ typedef struct {
 	int start;
 	int len;
 	int divide;
-	bool sync;
-	bool lock;
+	bool solo;
+	bool lockLength;
 } LOOP_DYNAMICS_STRUCTURE;
 
 //[/Headers]
@@ -110,10 +110,10 @@ private:
     std::unique_ptr<TextButton> resetSpeedButton;
     std::unique_ptr<TextButton> divideButton;
     std::unique_ptr<TextButton> startButton;
-    std::unique_ptr<ToggleButton> syncToggle;
-    std::unique_ptr<ToggleButton> lockToggle;
     std::unique_ptr<TextButton> stopAllButton;
     std::unique_ptr<TextButton> stopButton;
+    std::unique_ptr<TextButton> soloButton;
+    std::unique_ptr<TextButton> lockLengthButton;
     std::unique_ptr<Slider> slider3;
     std::unique_ptr<Label> label5;
     std::unique_ptr<TextButton> loopButton1;
@@ -125,7 +125,6 @@ private:
     std::unique_ptr<TextButton> loopButton6;
     std::unique_ptr<TextButton> loopButton7;
     std::unique_ptr<TextButton> loopButton8;
-
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LoopTab)

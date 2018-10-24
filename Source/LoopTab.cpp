@@ -244,18 +244,19 @@ LoopTab::LoopTab ()
     stopAllButton->addListener (this);
     stopAllButton->setBounds (91, row5, 69, 30);
     
+    soloButton.reset (new TextButton ("solo button"));
+    addAndMakeVisible (soloButton.get());
+    soloButton->setButtonText (TRANS("Solo"));
+    soloButton->addListener (this);
+    soloButton->setBounds (110, row5, 50, 30);
+    soloButton->setColour(TextButton::buttonOnColourId, MY_ALARM_COLOUR);
 
-    syncToggle.reset (new ToggleButton ("sync toggle button"));
-    addAndMakeVisible (syncToggle.get());
-    syncToggle->setButtonText (TRANS("Sync to L1"));
-    syncToggle->addListener (this);
-    syncToggle->setBounds (272, 48, 104, 32);
-
-    lockToggle.reset (new ToggleButton ("lock toggle button"));
-    addAndMakeVisible (lockToggle.get());
-    lockToggle->setButtonText (TRANS("Lock"));
-    lockToggle->addListener (this);
-    lockToggle->setBounds (312, 516, 96, 32);
+    lockLengthButton.reset (new TextButton ("lock length button"));
+    addAndMakeVisible (lockLengthButton.get());
+    lockLengthButton->setButtonText (TRANS("Lock"));
+    lockLengthButton->addListener (this);
+    lockLengthButton->setBounds (140, row5, 50, 30);
+    lockLengthButton->setColour(TextButton::buttonOnColourId, MY_ALARM_COLOUR);
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -274,16 +275,16 @@ LoopTab::LoopTab ()
 		m_loop[i].speed = DEFAULT_SPEED;
 		m_loop[i].start = DEFAULT_START;
 		m_loop[i].len = DEFAULT_LENGTH;
-		m_loop[i].sync = false;
-		m_loop[i].lock = false;
+		m_loop[i].solo = false;
+		m_loop[i].lockLength = false;
 		m_loop[i].divide = 8;
 		m_loopLast[i].vol = DEFAULT_VOLUME;
 		m_loopLast[i].pitch = DEFAULT_PITCH;
 		m_loopLast[i].speed = DEFAULT_SPEED;
 		m_loopLast[i].start = DEFAULT_START;
 		m_loopLast[i].len = DEFAULT_LENGTH;
-		m_loopLast[i].sync = false;
-		m_loopLast[i].lock = false;
+		m_loopLast[i].solo = false;
+		m_loopLast[i].lockLength = false;
 		m_loopLast[i].divide = 8;
 	}
 
@@ -301,24 +302,24 @@ LoopTab::~LoopTab()
 
     slider1 = nullptr;
     slider2 = nullptr;
+    slider3 = nullptr;
     slider4 = nullptr;
     slider5 = nullptr;
     label2 = nullptr;
     label3 = nullptr;
     label4 = nullptr;
     label6 = nullptr;
+    resetBalanceButton = nullptr;
     resetPitchButton = nullptr;
     resetSpeedButton = nullptr;
     divideButton = nullptr;
     startButton = nullptr;
-    syncToggle = nullptr;
-    lockToggle = nullptr;
     stopAllButton = nullptr;
     stopButton = nullptr;
-    slider3 = nullptr;
+    soloButton = nullptr;
+    lockLengthButton = nullptr;
     label5 = nullptr;
     loopButton1 = nullptr;
-    resetBalanceButton = nullptr;
     loopButton2 = nullptr;
     loopButton3 = nullptr;
     loopButton4 = nullptr;
@@ -362,13 +363,13 @@ void LoopTab::resized()
     int row6 = proportionOfHeight(0.89);
 
     loopButton1->setBounds (24, row1, 40, 35);
-    loopButton2->setBounds (75, row1, 40, 35);
-    loopButton3->setBounds (125, row1, 40, 35);
-    loopButton4->setBounds (175, row1, 40, 35);
+    loopButton2->setBounds (85, row1, 40, 35);
+    loopButton3->setBounds (145, row1, 40, 35);
+    loopButton4->setBounds (205, row1, 40, 35);
     loopButton5->setBounds (24, row2, 40, 35);
-    loopButton6->setBounds (75, row2, 40, 35);
-    loopButton7->setBounds (125, row2, 40, 35);
-    loopButton8->setBounds (175, row2, 40, 35);
+    loopButton6->setBounds (85, row2, 40, 35);
+    loopButton7->setBounds (145, row2, 40, 35);
+    loopButton8->setBounds (205, row2, 40, 35);
     slider1->setBounds (col1, row3, 56, sliderHeight);
     slider2->setBounds (col2, row3, 56, sliderHeight);
     slider3->setBounds (col3, row3, 56, sliderHeight);
@@ -387,9 +388,8 @@ void LoopTab::resized()
     divideButton->setBounds (col5+4, row5, 50, 35);
     stopButton->setBounds (col1, row6, 50, 35);
     stopAllButton->setBounds (col2, row6, 70, 35);
-
-    syncToggle->setBounds (col4 + 10, row1, 104, 32);
-    lockToggle->setBounds (col5, row6, 96, 32);
+    soloButton->setBounds (col3 + 20, row6, 50, 35);
+    lockLengthButton->setBounds (col5 + 4, row6, 50, 35);
 
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
@@ -442,7 +442,7 @@ void LoopTab::sliderValueChanged (Slider* sliderThatWasMoved)
 		int minVal = (int)slider5->getMinValue();
 		int maxVal = (int)slider5->getMaxValue();
 
-		if (m_loop[l].lock) {
+		if (m_loop[l].lockLength) {
 			if ((minVal + m_loop[l].len) > 16383) {
 				minVal = 16383 - m_loop[l].len;
 				slider5->setMinValue((double)minVal, dontSendNotification);
@@ -548,8 +548,8 @@ void LoopTab::buttonClicked (Button* buttonThatWasClicked)
 
 		slider5->setMinValue(m_loop[l].start, dontSendNotification);
 		slider5->setMaxValue(m_loop[l].start + m_loop[l].len, dontSendNotification);
-		lockToggle->setToggleState(true, dontSendNotification);
-		m_loop[l].lock = true;
+		m_loop[l].lockLength = true;
+        lockLengthButton->setToggleState(true, dontSendNotification);
 
         //[/UserButtonCode_divideButton]
     }
@@ -561,36 +561,6 @@ void LoopTab::buttonClicked (Button* buttonThatWasClicked)
 			m_midi->playLoop(l);
 
         //[/UserButtonCode_startButton]
-    }
-    else if (buttonThatWasClicked == syncToggle.get())
-    {
-        //[UserButtonCode_syncToggle] -- add your button handler code here..
-
-		if (syncToggle->getToggleState()) {
-			m_loop[l].sync = true;
-			if (m_midi != nullptr)
-				m_midi->sendLoopSyncFlag(l, 1);
-		}
-		else {
-			m_loop[l].sync = false;
-			if (m_midi != nullptr)
-				m_midi->sendLoopSyncFlag(l, 0);
-		}
-
-        //[/UserButtonCode_syncToggle]
-    }
-    else if (buttonThatWasClicked == lockToggle.get())
-    {
-        //[UserButtonCode_lockToggle] -- add your button handler code here..
-
-		if (lockToggle->getToggleState()) {
-			m_loop[l].lock = true;
-		}
-		else {
-			m_loop[l].lock = false;
-		}
-
-        //[/UserButtonCode_lockToggle]
     }
     else if (buttonThatWasClicked == stopAllButton.get())
     {
@@ -610,6 +580,34 @@ void LoopTab::buttonClicked (Button* buttonThatWasClicked)
 		if (m_midi != nullptr)
 			m_midi->stopLoop(l);
 
+        //[/UserButtonCode_stopButton]
+    }
+    else if (buttonThatWasClicked == soloButton.get())
+    {
+        //[UserButtonCode_stopButton] -- add your button handler code here..
+        
+        if (m_loop[l].solo) {
+            m_loop[l].solo = false;
+            soloButton->setToggleState(false, dontSendNotification);
+        }
+        else {
+            m_loop[l].solo = true;
+            soloButton->setToggleState(true, dontSendNotification);
+        }
+        //[/UserButtonCode_stopButton]
+    }
+    else if (buttonThatWasClicked == lockLengthButton.get())
+    {
+        //[UserButtonCode_stopButton] -- add your button handler code here..
+        
+        if (m_loop[l].lockLength) {
+            m_loop[l].lockLength = false;
+            lockLengthButton->setToggleState(false, dontSendNotification);
+        }
+        else {
+            m_loop[l].lockLength = true;
+            lockLengthButton->setToggleState(true, dontSendNotification);
+        }
         //[/UserButtonCode_stopButton]
     }
     else if (buttonThatWasClicked == loopButton1.get())
@@ -768,8 +766,8 @@ void LoopTab::resetLoop(int l) {
 	m_loop[l].speed = DEFAULT_SPEED;
 	m_loop[l].start = DEFAULT_START;
 	m_loop[l].len = DEFAULT_LENGTH;
-	m_loop[l].sync = false;
-	m_loop[l].lock = false;
+	m_loop[l].solo = false;
+	m_loop[l].lockLength = false;
 	m_loop[l].divide = 8;
 	if (m_currentLoop == l)
 		showLoop(l);
@@ -821,12 +819,14 @@ void LoopTab::showLoop(int l) {
 	slider4->setValue(m_loop[l].speed, dontSendNotification);
 	slider5->setMinValue(m_loop[l].start, dontSendNotification);
 	slider5->setMaxValue(m_loop[l].start + m_loop[l].len, dontSendNotification);
-	syncToggle->setToggleState(m_loop[l].sync, dontSendNotification);
-	lockToggle->setToggleState(m_loop[l].lock, dontSendNotification);
-	if (l > 0)
-		syncToggle->setEnabled(true);
-	else
-		syncToggle->setEnabled(false);
+    if (m_loop[l].solo)
+        soloButton->setToggleState(true, dontSendNotification);
+    else
+        soloButton->setToggleState(false, dontSendNotification);
+    if (m_loop[l].lockLength)
+        lockLengthButton->setToggleState(true, dontSendNotification);
+    else
+        lockLengthButton->setToggleState(false, dontSendNotification);
 }
 
 //[/MiscUserCode]

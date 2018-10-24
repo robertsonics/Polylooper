@@ -11,7 +11,7 @@
 		048BD5432D9F13105458FD2B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41EEF50D96C11897F96FD55C /* CoreMIDI.framework */; };
 		0E82A0B6C8CDCEC04293F8D9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE97249BA9936CEEE48D9432 /* Foundation.framework */; };
 		11C14FDBB86B9B1F6C306E61 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31BA73360BC677C0570D7601 /* Accelerate.framework */; };
-		187FA1F6216BD932000CF769 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D23C0C216975C4001FA701 /* LaunchScreen.storyboard */; };
+		18E0BEC5217E391D0013B3BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E0BEC4217E391D0013B3BC /* LaunchScreen.storyboard */; };
 		25B7451A395336AC8C93E459 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795D0E8BEDBFF6826B167CED /* AudioToolbox.framework */; };
 		3843B9CE7686524F12A93531 /* include_juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = F3FE9182334117355CD62207 /* include_juce_graphics.mm */; };
 		3CA29C64E3AFEBFB11E9E371 /* include_juce_audio_formats.mm in Sources */ = {isa = PBXBuildFile; fileRef = E179DC762B59D77FFE41B7DB /* include_juce_audio_formats.mm */; };
@@ -49,7 +49,7 @@
 		1273CE329C1ADF7E9423C826 /* include_juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_cryptography.mm; path = ../../JuceLibraryCode/include_juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
 		12ED12D12922A5EF789B69FF /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		181D390B21767D53008219FE /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = ../../Source/Config.h; sourceTree = "<group>"; };
-		18D23C0C216975C4001FA701 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		18E0BEC4217E391D0013B3BC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29129E61B52831A7339F8AA8 /* MainComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponent.cpp; path = ../../Source/MainComponent.cpp; sourceTree = SOURCE_ROOT; };
 		29CBCF7D8593FBA76E88E16B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		31BA73360BC677C0570D7601 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -184,7 +184,7 @@
 			children = (
 				56FD6EC0F614852F7B16F13D /* Info-App.plist */,
 				68A8FEB4CA18B0DFCAC91DB2 /* Images.xcassets */,
-				18D23C0C216975C4001FA701 /* LaunchScreen.storyboard */,
+				18E0BEC4217E391D0013B3BC /* LaunchScreen.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -329,7 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48B87CFC2B18FB9826A9140D /* Images.xcassets in Resources */,
-				187FA1F6216BD932000CF769 /* LaunchScreen.storyboard in Resources */,
+				18E0BEC5217E391D0013B3BC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
