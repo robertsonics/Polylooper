@@ -4,7 +4,7 @@
 *.suo
 *.aps
 *.user
-WTConfig.VC.db
+.DS_Store
 [Dd]ebug
 [Rr]elease
 [Xx]64
